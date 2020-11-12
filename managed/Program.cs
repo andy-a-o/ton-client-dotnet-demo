@@ -17,12 +17,8 @@ namespace test_dll_client
         {
             var bytes = Encoding.UTF8.GetBytes(str);
             var length = bytes.Length;
-            test_string_data_t result = new test_string_data_t();
-            result.content = Marshal.AllocHGlobal(length);
+            var result = new test_string_data_t { content = Marshal.AllocHGlobal(length) };
             Marshal.Copy(bytes, 0, result.content, length);
-            var ptr = Marshal.AllocHGlobal(IntPtr.Size + sizeof(int));
-            Marshal.WriteIntPtr(ptr, result.content);
-            Marshal.WriteInt32(ptr, length);
             result.len = (uint)length;
             return result;
         }
