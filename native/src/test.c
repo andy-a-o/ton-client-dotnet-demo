@@ -46,8 +46,11 @@ void log_test_str(test_string_data_t str) {
     free(data);
 }
 
-test_string_handle_t *test_create_context() {
+test_string_handle_t *test_create_context(test_string_data_t config) {
     test_log("test_create_context called");
+    char *conf = mem_copy_str_data(config);
+    test_log("config passed: %s", conf);
+    free(conf);
     test_string_handle_t *p = calloc(1, sizeof(test_string_handle_t));
     p->str = mem_copy_str("{\"result\":1}");
     p->len = strlen(p->str);

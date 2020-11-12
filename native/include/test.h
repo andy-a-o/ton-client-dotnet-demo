@@ -62,7 +62,7 @@ extern "C"
 
 TEST_API void test_log(const char *fmt, ...);
 
-TEST_API test_string_handle_t *test_create_context();
+TEST_API test_string_handle_t *test_create_context(test_string_data_t config);
 
 TEST_API void test_destroy_context(uint32_t context);
 

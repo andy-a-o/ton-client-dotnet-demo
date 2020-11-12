@@ -8,7 +8,7 @@ namespace test_dll_client
     {
         static void Main(string[] args)
         {
-            var intPtr = Interop.test_create_context(ToTonString(""));
+            var intPtr = Interop.test_create_context(ToTonString("{}"));
             Interop.test_read_string(intPtr);
             Interop.test_destroy_string(intPtr);
         }
