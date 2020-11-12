@@ -13,14 +13,14 @@ namespace test_dll_client
         /// Returned value is the internal string data.
         /// </summary>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern test_string_data_t test_read_string(test_string_handle_t str);
+        public static extern test_string_data_t test_read_string(IntPtr str);
 
         /// <summary>
         /// destroys rust string provided by <c>str</c> pointer.
         /// </summary>
         /// <param name="str"></param>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void test_destroy_string(test_string_handle_t str);
+        public static extern void test_destroy_string(IntPtr str);
 
         /// <summary>
         /// 
@@ -35,7 +35,7 @@ namespace test_dll_client
         /// </summary>
         /// <param name="config"></param>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern test_string_handle_t test_create_context(test_string_data_t config);
+        public static extern IntPtr test_create_context(test_string_data_t config);
 
         /// <summary>
         /// closes and releases all resources that was allocated and opened by library during serving functions related to provided context.
@@ -88,15 +88,10 @@ namespace test_dll_client
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal class test_string_handle_t
-    {
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public struct test_string_data_t
     {
         public IntPtr content;
-        public UInt32 len;
+        public uint len;
     }
 
     enum test_response_types_t

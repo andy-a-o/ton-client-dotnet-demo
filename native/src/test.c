@@ -47,7 +47,7 @@ void log_test_str(test_string_data_t str) {
 }
 
 test_string_handle_t *test_create_context(test_string_data_t config) {
-    test_log("test_create_context called");
+    test_log("test_create_context called!!!");
     char *conf = mem_copy_str_data(config);
     test_log("config passed: %s", conf);
     free(conf);

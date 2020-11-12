@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ContentWithTargetPath Include="..\native\cmake-build-debug\src\testlib.dll" Condition="Exists('..\native\cmake-build-debug\src\testlib.dll')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>testlib.dll</TargetPath>
+    </ContentWithTargetPath>
     <ContentWithTargetPath Include="testlib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>testlib.dll</TargetPath>
