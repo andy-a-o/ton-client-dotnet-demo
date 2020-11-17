@@ -8,22 +8,22 @@ namespace test_dll_client
     {
         static void Main(string[] args)
         {
-            var intPtr = Interop.test_create_context(ToTonString("{}"));
-            Interop.test_read_string(intPtr);
-            Interop.test_destroy_string(intPtr);
+            var intPtr = Interop.tc_create_context(ToTonString("{}"));
+            Interop.tc_read_string(intPtr);
+            Interop.tc_destroy_string(intPtr);
         }
 
-        private static test_string_data_t ToTonString(string str)
+        private static tc_string_data_t ToTonString(string str)
         {
             var bytes = Encoding.UTF8.GetBytes(str);
             var length = bytes.Length;
-            var result = new test_string_data_t { content = Marshal.AllocHGlobal(length) };
+            var result = new tc_string_data_t { content = Marshal.AllocHGlobal(length) };
             Marshal.Copy(bytes, 0, result.content, length);
             result.len = (uint)length;
             return result;
         }
 
-        public static string FromTonString(test_string_data_t str)
+        public static string FromTonString(tc_string_data_t str)
         {
             var bytes = new byte[str.len];
             Marshal.Copy(str.content, bytes, 0, (int)str.len);

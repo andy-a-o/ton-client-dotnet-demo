@@ -13,14 +13,14 @@ namespace test_dll_client
         /// Returned value is the internal string data.
         /// </summary>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern test_string_data_t test_read_string(IntPtr str);
+        public static extern tc_string_data_t tc_read_string(IntPtr str);
 
         /// <summary>
         /// destroys rust string provided by <c>str</c> pointer.
         /// </summary>
         /// <param name="str"></param>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void test_destroy_string(IntPtr str);
+        public static extern void tc_destroy_string(IntPtr str);
 
         /// <summary>
         /// 
@@ -29,19 +29,19 @@ namespace test_dll_client
         ///
         /// <p>Result is returned in form of <c>{ "result": context }</c> where <c>context</c> is a number with context handle.
         /// Error is returned in form <c>{ "error": { error fields } }</c>.
-        /// Note: <c>test_create_context</c> doesn't store pointer passed in config parameter.
+        /// Note: <c>tc_create_context</c> doesn't store pointer passed in config parameter.
         /// So it is safe to free this memory after the function returns.</p>
         /// 
         /// </summary>
         /// <param name="config"></param>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr test_create_context(test_string_data_t config);
+        public static extern IntPtr tc_create_context(tc_string_data_t config);
 
         /// <summary>
         /// closes and releases all resources that was allocated and opened by library during serving functions related to provided context.
         /// </summary>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void test_destroy_context(uint context);
+        public static extern void tc_destroy_context(uint context);
 
         /// <summary>
         /// Handles responses from the library.
@@ -57,48 +57,48 @@ namespace test_dll_client
         /// <c>STREAM = 100..</c> - additional function data related to request handling. Depends on the function.</param>
         /// <param name="finished">is a signal to release all additional data associated with the request. It is last response for specified request_id.</param>
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void test_response_handler_t(
+        public delegate void tc_response_handler_t(
             uint request_id,
-            test_string_data_t params_json,
+            tc_string_data_t params_json,
             uint response_type,
             bool finished);
 
         /// <summary>
         /// When application requires to invoke some ton client function it sends a function request to the library.
         /// </summary>
-        /// <param name="context">Client internal context created in <see cref="test_create_context"></see></param>
+        /// <param name="context">Client internal context created in <see cref="tc_create_context"></see></param>
         /// <param name="function_name">function name requested.</param>
         /// <param name="function_params_json">function parameters encoded as a JSON string. If a function hasn't parameters then en empty string must be passed.</param>
         /// <param name="request_id">application (or binding) defined request identifier. Usually binding allocates and stores some additional data with every request. This data will help in the future to properly route responses to the application.</param>
         /// <param name="response_handler">function that will receive responses related to this request.</param>
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void test_request(
+        public static extern void tc_request(
             uint context,
-            test_string_data_t function_name,
-            test_string_data_t function_params_json,
+            tc_string_data_t function_name,
+            tc_string_data_t function_params_json,
             uint request_id,
             [MarshalAs(UnmanagedType.FunctionPtr)]
-            test_response_handler_t response_handler);
+            tc_response_handler_t response_handler);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr test_request_sync(
+        public static extern IntPtr tc_request_sync(
             uint context,
-            test_string_data_t function_name,
-            test_string_data_t function_params_json);
+            tc_string_data_t function_name,
+            tc_string_data_t function_params_json);
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct test_string_data_t
+    public struct tc_string_data_t
     {
         public IntPtr content;
         public uint len;
     }
 
-    enum test_response_types_t
+    enum tc_response_types_t
     {
-        test_response_success = 0,
-        test_response_error = 1,
-        test_response_nop = 2,
-        test_response_custom = 100,
+        tc_response_success = 0,
+        tc_response_error = 1,
+        tc_response_nop = 2,
+        tc_response_custom = 100,
     }
 }

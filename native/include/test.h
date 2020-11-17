@@ -38,20 +38,20 @@
 typedef struct {
     const char *content;
     uint32_t len;
-} test_string_data_t;
+} tc_string_data_t;
 
-typedef struct test_string_handle_t test_string_handle_t;
+typedef struct tc_string_handle_t tc_string_handle_t;
 
-enum test_response_types_t {
+enum tc_response_types_t {
     test_response_success = 0,
     test_response_error = 1,
     test_response_nop = 2,
     test_response_custom = 100,
 };
 
-typedef void (*test_response_handler_t)(
+typedef void (*tc_response_handler_t)(
         uint32_t request_id,
-        test_string_data_t params_json,
+        tc_string_data_t params_json,
         uint32_t response_type,
         bool finished);
 
@@ -62,28 +62,27 @@ extern "C"
 
 TEST_API void test_log(const char *fmt, ...);
 
-TEST_API test_string_handle_t *test_create_context(test_string_data_t config);
+TEST_API tc_string_handle_t *tc_create_context(tc_string_data_t config);
 
-TEST_API void test_destroy_context(uint32_t context);
+TEST_API void tc_destroy_context(uint32_t context);
 
-TEST_API void test_request(
+TEST_API void tc_request(
         uint32_t context,
-        test_string_data_t function_name,
-        test_string_data_t function_params_json,
+        tc_string_data_t function_name,
+        tc_string_data_t function_params_json,
         uint32_t request_id,
-        test_response_handler_t response_handler);
+        tc_response_handler_t response_handler);
 
-TEST_API test_string_handle_t *test_request_sync(
+TEST_API tc_string_handle_t *tc_request_sync(
         uint32_t context,
-        test_string_data_t function_name,
-        test_string_data_t function_params_json);
+        tc_string_data_t function_name,
+        tc_string_data_t function_params_json);
 
-TEST_API test_string_data_t test_read_string(const test_string_handle_t *handle);
-TEST_API void test_read_string_tmp(const test_string_handle_t *handle);
+TEST_API tc_string_data_t tc_read_string(const tc_string_handle_t *handle);
 
-TEST_API void test_destroy_string(const test_string_handle_t *handle);
+TEST_API void tc_destroy_string(const tc_string_handle_t *handle);
 
-TEST_API void log_test_str(test_string_data_t str);
+TEST_API void log_test_str(tc_string_data_t str);
 
 #ifdef __cplusplus
 } // extern "C"
