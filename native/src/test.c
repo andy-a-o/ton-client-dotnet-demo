@@ -77,6 +77,7 @@ void tc_request(
              request_id, response_handler);
     free(name);
     free(params);
+    response_handler(request_id, function_params_json, 0, true);
 }
 
 tc_string_handle_t *tc_request_sync(
